@@ -38,10 +38,13 @@
                     <navigationItem key="navigationItem" id="i1U-M1-vGu">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Gqf-KP-IMR">
                             <connections>
-                                <segue destination="C23-Ws-MUi" kind="show" id="0zK-PK-5EA"/>
+                                <segue destination="C23-Ws-MUi" kind="show" identifier="soundSegue" id="0zK-PK-5EA"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="GU5-gJ-m5i" id="t4l-7m-OsG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
