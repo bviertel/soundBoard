@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  Sound Board
 //
-//  Created by Ann Marie Seyerlein on 5/17/17.
+//  Created by Brandon A Viertel on 5/17/17.
 //  Copyright © 2017 Brandon. All rights reserved.
 //
 

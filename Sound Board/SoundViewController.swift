@@ -2,7 +2,7 @@
 //  SoundViewController.swift
 //  Sound Board
 //
-//  Created by Ann Marie Seyerlein on 5/17/17.
+//  Created by Brandon Viertel on 5/17/17.
 //  Copyright © 2017 Brandon. All rights reserved.
 //
 
@@ -18,15 +18,19 @@ class SoundViewController: UIViewController {
     
     @IBOutlet weak var nameTextField: UITextField!
     
+    // Used to disable buttons
+    
     @IBOutlet weak var playButton: UIButton!
     
     @IBOutlet weak var addButton: UIButton!
     
-    // Initializing Audio Recorder
+    // Initializing Audio Recorder and Audio Player
     
     var audioRecorder : AVAudioRecorder?
     
     var audioPlayer : AVAudioPlayer?
+    
+    // Location of the audio file
     
     var audioURL : URL?
     
@@ -35,6 +39,8 @@ class SoundViewController: UIViewController {
         super.viewDidLoad()
         
         setUpRecorder()
+        
+        // Buttons set to disabled so user cannot select before audio is captured
         
         playButton.isEnabled = false
         
@@ -75,6 +81,8 @@ class SoundViewController: UIViewController {
             print("#############") */
             
             // Create settings for Audio Recorder
+            
+            // Created Dictionary because the settings section in the AVAudioRecorder class needed a type Dictionary. Can have many different options in the settings dictionary.
             
             // Originally had AnyObject, but only needed Any
         
@@ -142,7 +150,10 @@ class SoundViewController: UIViewController {
         
     }
     
+    // Plays the recently captured audio
+    
     @IBAction func playTapped(_ sender: Any) {
+        
         do {
             
             try audioPlayer = AVAudioPlayer(contentsOf: audioURL!)
@@ -151,14 +162,17 @@ class SoundViewController: UIViewController {
         
         } catch {
             
-            
+            // Nothing to be caught...
             
         }
         
-    
     }
     
+    // Adds to the Core Data
+    
     @IBAction func addTapped(_ sender: Any) {
+        
+        // Context Stuff, for Core Data to hold, references as Context
         
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         
@@ -166,11 +180,18 @@ class SoundViewController: UIViewController {
         
         sound.name = nameTextField.text!
         
+        // Because audioURL is of type URL, it needs to be converted to that of NSData so that it can be stored in sound.audio which is of binary type
+        
         sound.audio = NSData(contentsOf: audioURL!)
+        
+        // Save all the contextual stuff
         
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
         
+        // Pop back to main View Controller
+        
         navigationController?.popViewController(animated: true)
+    
     }
     
 }
