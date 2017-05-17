@@ -18,14 +18,25 @@ class SoundViewController: UIViewController {
     
     @IBOutlet weak var nameTextField: UITextField!
     
+    @IBOutlet weak var playButton: UIButton!
+    
+    @IBOutlet weak var addButton: UIButton!
+    
     // Initializing Audio Recorder
     
-    var audioRecorder : AVAudioRecorder? = nil
+    var audioRecorder : AVAudioRecorder?
+    
+    var audioPlayer : AVAudioPlayer?
+    
+    var audioURL : URL?
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
         
         setUpRecorder()
+        
+        playButton.isEnabled = false
         
     }
     
@@ -53,13 +64,13 @@ class SoundViewController: UIViewController {
             
             let pathComponents = [basePath, "audio.m4a"]
             
-            let audioURL = NSURL.fileURL(withPathComponents: pathComponents)!
+            audioURL = NSURL.fileURL(withPathComponents: pathComponents)!
             
-            print("#############")
+            /* print("#############")
             
             print(audioURL)
             
-            print("#############")
+            print("#############") */
             
             // Create settings for Audio Recorder
             
@@ -79,7 +90,7 @@ class SoundViewController: UIViewController {
             // Whenever we record something, it has to save it to a file
             // URL is location of the stored audio
             
-            audioRecorder = try AVAudioRecorder(url: audioURL, settings: settings)
+            audioRecorder = try AVAudioRecorder(url: audioURL!, settings: settings)
             
             audioRecorder!.prepareToRecord()
             
@@ -108,6 +119,10 @@ class SoundViewController: UIViewController {
             
             recordButton.setTitle("Record", for: .normal)
             
+            // Enable Play button (Automatically disabled without recording)
+            
+            playButton.isEnabled = true
+            
         } else {
             
             // Start Recording
@@ -124,6 +139,19 @@ class SoundViewController: UIViewController {
     }
     
     @IBAction func playTapped(_ sender: Any) {
+        do {
+            
+            try audioPlayer = AVAudioPlayer(contentsOf: audioURL!)
+            
+            audioPlayer!.play()
+        
+        } catch {
+            
+            
+            
+        }
+        
+    
     }
     
     @IBAction func addTapped(_ sender: Any) {
